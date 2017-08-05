@@ -13,13 +13,7 @@ int main() {
     cin >> age;
     Passenger *passenger = new Passenger(name,age);
     cout << "Welcome, " << name << "!" << endl;
-    cout << "Enter destination" << endl;
-    cout << "a - Africa" << endl;
-    cout << "e - Europe" << endl;
-    cout << "as - Asia" << endl;
-    cout << "na - North America" << endl;
-    cout << "sa - South America" << endl;
-    cout << "au - Australia" << endl;
-    cout << "an - Antartica" << endl;
+    BookingManager manager{*passenger};
     delete passenger;
 }
+
