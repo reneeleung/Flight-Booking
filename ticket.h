@@ -9,12 +9,11 @@ class Ticket {
     std::string date;
     Class *classOption;
     Burger *burgerOption;
+    void printPrice();
     public:
     Ticket(std::string date);
     void modifyDate(std::string date);
     void upgradeClass();
-    int price();
-    std::string description();
     ~Ticket();
 };
 

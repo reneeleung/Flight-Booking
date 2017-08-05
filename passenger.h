@@ -14,6 +14,6 @@ class Passenger {
     void addTicket(Ticket &ticket);
     void removeTicket(Ticket &ticket);
     void printBookedTickets();
-    ~Passenger() = default;
+    ~Passenger();
 };
 #endif
