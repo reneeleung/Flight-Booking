@@ -29,6 +29,8 @@ Ticket(string date): date{date}, burgerOption{new BaseBurger}{
         }
         break;
     }
+    cout << "Enter seat" << endl;
+    cin >> seat;
     cout << "Customize your burger" << endl;
     cout << "p - add proteins" << endl;
     cout << "l - add lettuce" << endl;
@@ -79,4 +81,10 @@ void Ticket::printPrice() {
     cout << classOption->description() << "class: " << class_price << endl;
     cout << burgerOption->description() << ": " << burger_price << endl;
     cout << "Total: " << class_price + burger_price << endl;
+}
+
+ostream &operator<<(ostream &out, Ticket &t) {
+    out << "Date: " << t.date << endl;
+    out << "Seat: " << t.seat << endl;
+    t.printPrice();
 }
