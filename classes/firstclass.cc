@@ -1,6 +1,6 @@
-#include "ticket.h"
+#include "class.h"
 
-class FirstClassTicket: public Ticket {
+class FirstClass: public Class {
     int price() override { return 1000; }
-    std::string description() override { return "first class"; }
+    std::string description() override { return "first"; }
 };

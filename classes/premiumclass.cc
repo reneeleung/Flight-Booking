@@ -1,6 +1,6 @@
-#include "ticket.h"
+#include "class.h"
 
-class PremiumEconomyTicket: public Ticket {
+class PremiumClass: public Class {
     int price() override { return 200; }
     std::string description() override { return "premium economy"; }
 };

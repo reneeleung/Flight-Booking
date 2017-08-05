@@ -1,11 +1,21 @@
 #ifndef __TICKET_H__
 #define __TICKET_H__
 #include <string>
+#include "classes/class.h"
+
+class Burger;
 
 class Ticket {
-    virtual int price() = 0;
-    virtual std::string description();
-    virtual ~Ticket() = default;
+    std::string date;
+    Class *classOption;
+    Burger *burgerOption;
+    public:
+    Ticket(std::string date);
+    void modifyDate(std::string date);
+    void upgradeClass();
+    int price();
+    std::string description();
+    ~Ticket();
 };
 
 #endif
