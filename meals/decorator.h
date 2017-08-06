@@ -7,7 +7,7 @@ class Decorator: public Burger {
     Burger *component;
     public:
     Decorator(Burger *component): component{component}{}
-    virtual ~Decorator() { delete compoenet; }
+    virtual ~Decorator() { delete component; }
 };
 
 #endif

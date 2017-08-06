@@ -3,21 +3,22 @@
 #include <string>
 #include <iostream>
 #include "classes/class.h"
+#include "flight.h"
 
 class Burger;
 
 class Ticket {
-    std::string date;
     std::string seat;
+    Flight &flight;
     Class *classOption;
     Burger *burgerOption;
     void printPrice();
     public:
-    Ticket(std::string date);
+    Ticket(Flight &flight);
     void modifyDate(std::string date);
     void upgradeClass();
     ~Ticket();
-    friend std::ostream &operator<<(std::ostream out, Ticket &t);
+    friend std::ostream &operator<<(std::ostream &out, Ticket &t);
 };
 
 #endif

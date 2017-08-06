@@ -11,16 +11,25 @@ void Passenger::addTicket(Ticket &ticket) {
     booked_tickets.push_back(&ticket);
 }
 
-void Passenger::removeTicket(Ticket &ticket) {
-    for (unsigned i = 0; i < booked_tickets.size(); ++i) {
-        if (booked_tickets[i] == &ticket) {
-            booked_tickets.erase(booked_tickets.begin() + i);
-            break;
-        }
-    }
+void Passenger::notify() {
+    cout << name << "'s flight is delayed" << endl;
 }
 
-void printBookedTickets() {
-    for (auto ticket: booked_tickets) cout << *ticket << endl;
+void Passenger::removeTicket(int i) {
+    if (i >= booked_tickets.size()) cout << "Invalid ticket" << endl; return;
+    booked_tickets.erase(booked_tickets.begin() + i);
+}
+
+void Passenger::upgradeTicket(int i) {
+    if (i >= booked_tickets.size()) cout << "Invalid ticket" << endl; return;
+    booked_tickets[i]->upgradeClass();
+}
+void Passenger::printBookedTickets() {
+    int i = 0;
+    for (auto ticket: booked_tickets) {
+        cout << "Ticket " << i << endl;
+        cout << *ticket << endl;
+        i++;
+    }
     if (age < 18) cout << "All above prices are 50% off" << endl;
 }

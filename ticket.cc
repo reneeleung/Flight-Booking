@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Ticket(string date): date{date}, burgerOption{new BaseBurger}{
+Ticket::Ticket(Flight &flight): flight{flight}, burgerOption{new BaseBurger}{
     cout << "Select your class" << endl;
     cout << "e - economy" << endl;
     cout << "p - premium economy" << endl;
@@ -25,7 +25,7 @@ Ticket(string date): date{date}, burgerOption{new BaseBurger}{
             case 'p': classOption = new PremiumClass; break;
             case 'b': classOption = new BusinessClass; break;
             case 'f': classOption = new FirstClass; break;
-            default: continue;
+            default: cout << "Invalid class" << endl; continue;
         }
         break;
     }
@@ -44,11 +44,13 @@ Ticket(string date): date{date}, burgerOption{new BaseBurger}{
         switch (selectBurger) {
             case 'p':
                 cout << "What kind of protein would you like?" << endl;
+                cin.ignore();
                 getline(cin,type);
                 burgerOption = new Protein(burgerOption, type); break;
             case 'l': burgerOption = new Lettuce(burgerOption); break;
             case 's':
                 cout << "What kind of sauce would you like?" << endl;
+                cin.ignore();
                 getline(cin,type);
                 burgerOption = new Sauce(burgerOption, type); break;
         }
@@ -61,15 +63,14 @@ Ticket::~Ticket() {
     delete burgerOption;
 }
 
-void Ticket::modifyDate(string date) { this->date = date;}
 
 void Ticket::upgradeClass() {
     if (classOption->description() == "first") {
         cout << "Already at highest class!" << endl;
         return;
     }
-    delete classOption;
     string s = classOption->description();
+    delete classOption;
     if (s == "economy") classOption = new PremiumClass; return;
     if (s == "premium economy") classOption = new BusinessClass; return;
     if (s == "business") classOption = new FirstClass;
@@ -77,14 +78,17 @@ void Ticket::upgradeClass() {
 
 void Ticket::printPrice() {
     int class_price = classOption->price();
-    int burger_price = burgerOption->price();
-    cout << classOption->description() << "class: " << class_price << endl;
+    int burger_price = burgerOption->getPrice();
+    cout << classOption->description() << " class: " << class_price << endl;
     cout << burgerOption->description() << ": " << burger_price << endl;
     cout << "Total: " << class_price + burger_price << endl;
 }
 
 ostream &operator<<(ostream &out, Ticket &t) {
-    out << "Date: " << t.date << endl;
+    out << "Date: " << t.flight.getDate() << endl;
+    out << "Flight #: " << t.flight.getFlightNumber() << endl;
+    out << "Destination: " << t.flight.getDestination() << endl;
     out << "Seat: " << t.seat << endl;
     t.printPrice();
+    return out;
 }

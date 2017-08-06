@@ -7,5 +7,5 @@ Protein::Protein(Burger *component, string proteinType):
 int Protein::getPrice() { return component->getPrice() + price; }
 
 string Protein::description() {
-    return component->getDescription() + " with " + proteinType;
+    return component->description() + " with " + proteinType;
 }
