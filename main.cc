@@ -17,12 +17,13 @@ int main() {
     cin >> age;
     cout << "Welcome, " << name << "!" << endl;
     shared_ptr<Passenger> user{new Passenger{name,age}};
-    shared_ptr<Passenger> p1{new Passenger{"A child passenger",10}};
-    shared_ptr<Passenger> p2{new Passenger{"An adult passenger",25}};
+    shared_ptr<Passenger> p1{new Passenger{"Seuss",10}};
+    shared_ptr<Passenger> p2{new Passenger{"Potter",25}};
     for (auto flight: flights) {
         flight->attachObserver(p1);
         flight->attachObserver(p2);
     }
+    flights.back()->notifyObservers();
     while (1) {
         cout << "Select an option" << endl;
         cout << "a - add ticket" << endl;
