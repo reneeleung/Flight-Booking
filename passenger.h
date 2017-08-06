@@ -8,10 +8,10 @@
 class Passenger: public Observer {
     std::string name;
     int age;
-    std::vector <Ticket *> booked_tickets;
+    std::vector <std::shared_ptr<Ticket>> booked_tickets;
     public:
     Passenger(std::string name, int age);
-    void addTicket(Ticket &ticket);
+    void addTicket(std::shared_ptr<Ticket> &ticket);
     void removeTicket(int i);
     void upgradeTicket(int i);
     void printBookedTickets();

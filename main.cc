@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    vector <Flight *> flights;
+    vector <unique_ptr <Flight>> flights;
     flights.emplace_back(new Flight{5, "AC100", "North Pole", "5 AUG 2017"});
     flights.emplace_back(new Flight{2, "AC101", "South Pole", "6 AUG 2017"});
     flights.emplace_back(new Flight{3, "AC102", "Vancouver", "8 AUG 2017"});
@@ -19,7 +19,7 @@ int main() {
     shared_ptr<Passenger> user{new Passenger{name,age}};
     shared_ptr<Passenger> p1{new Passenger{"Seuss",10}};
     shared_ptr<Passenger> p2{new Passenger{"Potter",25}};
-    for (auto flight: flights) {
+    for (auto &flight: flights) {
         flight->attachObserver(p1);
         flight->attachObserver(p2);
     }
@@ -39,11 +39,11 @@ int main() {
                 cout << "Where would you like to go?" << endl;
                 cin.ignore();
                 getline(cin, dest);
-                for (auto flight: flights) {
+                for (auto &flight: flights) {
                     if (flight->getDestination() == dest && !flight->full()) {
                         flight->attachObserver(user);
-                        Ticket *ticket = new Ticket{flight};
-                        user->addTicket(*ticket);
+                        auto ticket = shared_ptr<Ticket>{new Ticket{flight}};
+                        user->addTicket(ticket);
                         break;
                     } else if (flight->getDestination() == dest) {
                         cout << "Sorry, the flight is full." << endl;
@@ -68,6 +68,5 @@ int main() {
         }
         if (c == 'q') break;
     }
-    for (auto flight: flights) delete flight;
 }
 

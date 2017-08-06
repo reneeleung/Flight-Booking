@@ -7,7 +7,7 @@ class Protein: public Decorator {
     const int price;
     const std::string proteinType;
     public:
-    Protein(Burger *component, std::string proteinType);
+    Protein(std::shared_ptr<Burger> component, std::string proteinType);
     int getPrice() override;
     std::string description() override;
 };

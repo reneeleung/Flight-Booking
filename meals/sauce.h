@@ -5,7 +5,7 @@
 class Sauce: public Decorator {
     const std::string sauceType;
     public:
-    Sauce(Burger *component, std::string sauceType);
+    Sauce(std::shared_ptr<Burger> component, std::string sauceType);
     int getPrice() override;
     std::string description() override;
 };

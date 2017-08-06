@@ -11,7 +11,8 @@
 
 using namespace std;
 
-Ticket::Ticket(Flight *flight): flight{flight}, burgerOption{new BaseBurger}{
+Ticket::Ticket(unique_ptr<Flight> &flight):
+    flight{flight}, burgerOption{unique_ptr<Burger>{new BaseBurger}}{
     cout << "Select your class" << endl;
     cout << "e - economy" << endl;
     cout << "p - premium economy" << endl;
@@ -21,10 +22,10 @@ Ticket::Ticket(Flight *flight): flight{flight}, burgerOption{new BaseBurger}{
     while (1) {
         cin >> selectClass;
         switch (selectClass) {
-            case 'e': classOption = new EconomyClass; break;
-            case 'p': classOption = new PremiumClass; break;
-            case 'b': classOption = new BusinessClass; break;
-            case 'f': classOption = new FirstClass; break;
+            case 'e': classOption = unique_ptr<Class>{new EconomyClass}; break;
+            case 'p': classOption = unique_ptr<Class>{new PremiumClass}; break;
+            case 'b': classOption = unique_ptr<Class>{new BusinessClass}; break;
+            case 'f': classOption = unique_ptr<Class>{new FirstClass}; break;
             default: cout << "Invalid class" << endl; continue;
         }
         break;
@@ -46,22 +47,19 @@ Ticket::Ticket(Flight *flight): flight{flight}, burgerOption{new BaseBurger}{
                 cout << "What kind of protein would you like?" << endl;
                 cin.ignore();
                 getline(cin,type);
-                burgerOption = new Protein(burgerOption, type); break;
-            case 'l': burgerOption = new Lettuce(burgerOption); break;
+                burgerOption = shared_ptr<Burger>{new Protein(burgerOption, type)}; break;
+            case 'l': burgerOption = shared_ptr<Burger>{new Lettuce(burgerOption)}; break;
             case 's':
                 cout << "What kind of sauce would you like?" << endl;
                 cin.ignore();
                 getline(cin,type);
-                burgerOption = new Sauce(burgerOption, type); break;
+                burgerOption = shared_ptr<Burger>{new Sauce(burgerOption, type)}; break;
         }
     }
     cout << "You ordered " << burgerOption->description() << endl;
 }
 
-Ticket::~Ticket() {
-    delete classOption;
-    delete burgerOption;
-}
+Ticket::~Ticket() {}
 
 
 void Ticket::upgradeClass() {
@@ -70,10 +68,10 @@ void Ticket::upgradeClass() {
         return;
     }
     string s = classOption->description();
-    delete classOption;
-    if (s == "business") classOption = new FirstClass;
-    if (s == "premium economy") classOption = new BusinessClass;
-    if (s == "economy") classOption = new PremiumClass;
+    classOption.reset();
+    if (s == "business") classOption = unique_ptr<Class>{new FirstClass};
+    if (s == "premium economy") classOption = unique_ptr<Class>{new BusinessClass};
+    if (s == "economy") classOption = unique_ptr<Class>{new PremiumClass};
 }
 
 void Ticket::printPrice() {

@@ -1,7 +1,7 @@
 #include "lettuce.h"
 using namespace std;
 
-Lettuce::Lettuce(Burger *component): Decorator{component}, price{1}{}
+Lettuce::Lettuce(shared_ptr<Burger> component): Decorator{component}, price{1}{}
 
 int Lettuce::getPrice() { return component->getPrice() + price; }
 

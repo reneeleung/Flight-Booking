@@ -1,7 +1,7 @@
 #include "sauce.h"
 using namespace std;
 
-Sauce::Sauce(Burger *component, string sauceType):
+Sauce::Sauce(shared_ptr<Burger> component, string sauceType):
     Decorator{component}, sauceType{sauceType}{}
 
 int Sauce::getPrice() { return component->getPrice(); }

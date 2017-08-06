@@ -9,12 +9,12 @@ class Burger;
 
 class Ticket {
     std::string seat;
-    Flight *flight;
-    Class *classOption;
-    Burger *burgerOption;
+    std::unique_ptr<Flight> &flight;
+    std::unique_ptr<Class> classOption;
+    std::shared_ptr<Burger> burgerOption;
     void printPrice();
     public:
-    Ticket(Flight *flight);
+    Ticket(std::unique_ptr<Flight> &flight);
     Ticket(const Ticket &) = default;
     void modifyDate(std::string date);
     void upgradeClass();

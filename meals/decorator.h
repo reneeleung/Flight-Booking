@@ -4,10 +4,10 @@
 
 class Decorator: public Burger {
     protected:
-    Burger *component;
+    std::shared_ptr<Burger> component;
     public:
-    Decorator(Burger *component): component{component}{}
-    virtual ~Decorator() { delete component; }
+    Decorator(std::shared_ptr<Burger> component): component{component}{}
+    virtual ~Decorator() = default;
 };
 
 #endif

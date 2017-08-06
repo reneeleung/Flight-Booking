@@ -6,7 +6,7 @@
 class Lettuce: public Decorator {
     const int price;
     public:
-    Lettuce(Burger *component);
+    Lettuce(std::shared_ptr<Burger> component);
     int getPrice() override;
     std::string description() override;
 };
