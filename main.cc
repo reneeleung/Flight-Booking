@@ -5,10 +5,10 @@
 using namespace std;
 
 int main() {
-    vector <Flight> flights;
-    flights.emplace_back(5, "AC100", "North Pole", "5 AUG 2017");
-    flights.emplace_back(2, "AC101", "South Pole", "5 AUG 2017");
-    flights.emplace_back(3, "AC102", "Vancouver", "5 AUG 2017");
+    vector <Flight *> flights;
+    flights.emplace_back(new Flight{5, "AC100", "North Pole", "5 AUG 2017"});
+    flights.emplace_back(new Flight{2, "AC101", "South Pole", "6 AUG 2017"});
+    flights.emplace_back(new Flight{3, "AC102", "Vancouver", "8 AUG 2017"});
     string name;
     int age;
     cout << "Enter name: " << endl;
@@ -16,12 +16,12 @@ int main() {
     cout << "Enter age: " << endl;
     cin >> age;
     cout << "Welcome, " << name << "!" << endl;
-    Passenger user(name,age);
-    Passenger p1("A child passenger",10);
-    Passenger p2("An adult passenger",25);
+    shared_ptr<Passenger> user{new Passenger{name,age}};
+    shared_ptr<Passenger> p1{new Passenger{"A child passenger",10}};
+    shared_ptr<Passenger> p2{new Passenger{"An adult passenger",25}};
     for (auto flight: flights) {
-        flight.attachObserver(p1);
-        flight.attachObserver(p2);
+        flight->attachObserver(p1);
+        flight->attachObserver(p2);
     }
     while (1) {
         cout << "Select an option" << endl;
@@ -39,18 +39,18 @@ int main() {
                 cin.ignore();
                 getline(cin, dest);
                 for (auto flight: flights) {
-                    if (flight.getDestination() == dest && !flight.full()) {
-                        flight.attachObserver(user);
+                    if (flight->getDestination() == dest && !flight->full()) {
+                        flight->attachObserver(user);
                         Ticket *ticket = new Ticket{flight};
-                        user.addTicket(*ticket);
+                        user->addTicket(*ticket);
                         break;
-                    } else if (flight.getDestination() == dest) {
+                    } else if (flight->getDestination() == dest) {
                         cout << "Sorry, the flight is full." << endl;
                     }
                 }
                 break;
             case 'v':
-                user.printBookedTickets(); break;
+                user->printBookedTickets(); break;
             case 'c':
                 cout << "Press r to remove ticket or u to upgrade ticket" << endl;
                 while (1) {
@@ -59,14 +59,14 @@ int main() {
                     cout << "Invalid command!" << endl;
                 }
                 cout << "Which ticket would you like to change?" << endl;
-                user.printBookedTickets();
                 cin >> tic;
-                if (c == 'r') user.removeTicket(tic);
-                else user.upgradeTicket(tic);
+                if (c == 'r') user->removeTicket(tic);
+                if (c == 'u') user->upgradeTicket(tic);
                 break;
-            case 'q': return 0;
+            case 'q': break;
         }
+        if (c == 'q') break;
     }
-
+    for (auto flight: flights) delete flight;
 }
 

@@ -16,12 +16,16 @@ void Passenger::notify() {
 }
 
 void Passenger::removeTicket(int i) {
-    if (i >= booked_tickets.size()) cout << "Invalid ticket" << endl; return;
+    if (i >= booked_tickets.size()) {
+        cout << "Invalid ticket" << endl; return;
+    }
     booked_tickets.erase(booked_tickets.begin() + i);
 }
 
 void Passenger::upgradeTicket(int i) {
-    if (i >= booked_tickets.size()) cout << "Invalid ticket" << endl; return;
+    if (i >= booked_tickets.size()) {
+        cout << "Invalid ticket" << endl; return;
+    }
     booked_tickets[i]->upgradeClass();
 }
 void Passenger::printBookedTickets() {

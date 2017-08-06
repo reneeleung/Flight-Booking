@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Ticket::Ticket(Flight &flight): flight{flight}, burgerOption{new BaseBurger}{
+Ticket::Ticket(Flight *flight): flight{flight}, burgerOption{new BaseBurger}{
     cout << "Select your class" << endl;
     cout << "e - economy" << endl;
     cout << "p - premium economy" << endl;
@@ -71,9 +71,9 @@ void Ticket::upgradeClass() {
     }
     string s = classOption->description();
     delete classOption;
-    if (s == "economy") classOption = new PremiumClass; return;
-    if (s == "premium economy") classOption = new BusinessClass; return;
     if (s == "business") classOption = new FirstClass;
+    if (s == "premium economy") classOption = new BusinessClass;
+    if (s == "economy") classOption = new PremiumClass;
 }
 
 void Ticket::printPrice() {
@@ -85,9 +85,9 @@ void Ticket::printPrice() {
 }
 
 ostream &operator<<(ostream &out, Ticket &t) {
-    out << "Date: " << t.flight.getDate() << endl;
-    out << "Flight #: " << t.flight.getFlightNumber() << endl;
-    out << "Destination: " << t.flight.getDestination() << endl;
+    out << "Date: " << t.flight->getDate() << endl;
+    out << "Flight #: " << t.flight->getFlightNumber() << endl;
+    out << "Destination: " << t.flight->getDestination() << endl;
     out << "Seat: " << t.seat << endl;
     t.printPrice();
     return out;

@@ -2,7 +2,6 @@
 #define __FLIGHT_H__
 #include "subject.h"
 #include <string>
-
 class Flight: public Subject {
     const int capacity;
     const std::string flight_num;

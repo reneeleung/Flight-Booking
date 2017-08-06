@@ -9,12 +9,13 @@ class Burger;
 
 class Ticket {
     std::string seat;
-    Flight &flight;
+    Flight *flight;
     Class *classOption;
     Burger *burgerOption;
     void printPrice();
     public:
-    Ticket(Flight &flight);
+    Ticket(Flight *flight);
+    Ticket(const Ticket &) = default;
     void modifyDate(std::string date);
     void upgradeClass();
     ~Ticket();
